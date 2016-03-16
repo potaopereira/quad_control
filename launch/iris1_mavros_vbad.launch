@@ -65,6 +65,7 @@
     <!-- This runs rqt and we have to select plugin manually -->
     <!-- similar to rosrun rqt_gui rqt_gui -->
     <!-- <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/> -->
+    <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui" args="--standalone  tabbedGUI --args Iris1/"/>
 
 
   </group>

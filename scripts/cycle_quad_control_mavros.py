@@ -46,6 +46,7 @@ from numpy import *
 
 from utility_functions import GetRotFromEulerAnglesDeg,Velocity_Filter
 
+# import list of available trajectories
 from TrajectoryPlanner import trajectories_dictionary
 from Quadrotor_Trajectory_Tracking_Controllers import controllers_dictionary
 from Yaw_Rate_Controller import yaw_controllers_dictionary
@@ -70,14 +71,14 @@ class quad_controller():
         self.state_quad = numpy.zeros(3+3+3)
 
         # dy default, desired trajectory is staying still in origin
-        traj_class = trajectories_dictionary.trajectories_dictionary[0]
+        TrajectoryClass = trajectories_dictionary.trajectories_dictionary['StayAtRest']
         # zero vector
         zvec  = numpy.zeros(3)
         # Identity matrix
         Ident = numpy.array([[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0]])
         # dy default
-        self.TrajGenerator = traj_class(zvec,Ident)
-        self.TrajGenerator = traj_class(numpy.array([0.0,0.0,1.0]),Ident)
+        # self.TrajGenerator = TrajectoryClass(zvec,Ident)
+        self.TrajGenerator = TrajectoryClass(numpy.array([0.0,0.0,1.0]),Ident)
 
         # initialize counter for publishing to GUI
         # we only publish when self.PublishToGUI =1
@@ -262,9 +263,9 @@ class quad_controller():
             TrajDes_parameters = numpy.array(req.parameters)   
 
         # update class for TrajectoryGenerator
-        traj_class = trajectories_dictionary.trajectories_dictionary[flagTrajDes]
+        TrajectoryClass = trajectories_dictionary.trajectories_dictionary[flagTrajDes]
 
-        self.TrajGenerator = traj_class(TrajDes_OffSet,TrajDes_Rotation,TrajDes_parameters)
+        self.TrajGenerator = TrajectoryClass(TrajDes_OffSet,TrajDes_Rotation,TrajDes_parameters)
 
         # we need to update initial time for trajectory generation
         self.time_TrajDes_t0 = rospy.get_time()

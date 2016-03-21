@@ -265,6 +265,7 @@ class quad_controller():
         # update class for TrajectoryGenerator
         TrajectoryClass = trajectories_dictionary.trajectories_dictionary[flagTrajDes]
 
+        parameters = {'offset': numpy.array(req.offset), 'rotation': GetRotFromEulerAnglesDeg(numpy.array(req.rotation)), 'radius': ...}
         self.TrajGenerator = TrajectoryClass(TrajDes_OffSet,TrajDes_Rotation,TrajDes_parameters)
 
         # we need to update initial time for trajectory generation
